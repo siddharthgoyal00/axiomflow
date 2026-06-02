@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  body { @apply bg-stone-50 text-stone-800 font-sans; font-size:15px; line-height:1.6; }
+  h1,h2,h3 { @apply font-display tracking-tight; }
+}
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 font-sans font-medium rounded-lg transition-all duration-150 focus:outline-none select-none; }
+  .btn-primary   { @apply btn bg-accent text-white px-4 py-2 text-sm hover:bg-stone-700 active:scale-[0.98] shadow-sm; }
+  .btn-secondary { @apply btn bg-white text-stone-700 border border-stone-200 px-4 py-2 text-sm hover:bg-stone-50 hover:border-stone-300 active:scale-[0.98] shadow-card; }
+  .btn-brand     { @apply btn bg-brand-600 text-white px-4 py-2 text-sm hover:bg-brand-700 active:scale-[0.98] shadow-sm; }
+  .btn-lg        { @apply px-6 py-2.5 text-base rounded-xl; }
+  .input  { @apply w-full px-3.5 py-2.5 rounded-lg border border-stone-200 bg-white text-stone-800 text-sm placeholder-stone-400 focus:outline-none focus:border-brand-400 focus:shadow-focus transition-all duration-150; }
+  .card   { @apply bg-white rounded-xl border border-stone-200 shadow-card; }
+  .badge  { @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium font-sans; }
+  .page-container { @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8; }
+  .section-label  { @apply text-xs font-mono font-medium tracking-widest text-stone-400 uppercase; }
+}
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track  { @apply bg-stone-100; }
+::-webkit-scrollbar-thumb  { @apply bg-stone-300 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-stone-400; }
+.stagger-1{animation-delay:.05s;opacity:0}
+.stagger-2{animation-delay:.10s;opacity:0}
+.stagger-3{animation-delay:.15s;opacity:0}
+.stagger-4{animation-delay:.20s;opacity:0}
