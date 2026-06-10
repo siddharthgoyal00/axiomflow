@@ -1,0 +1,84 @@
+server:
+  port: 8001
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/axiomflow
+    username: axiomflow     
+    password: axiomflow123  # Matches POSTGRES_PASSWORD
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  jackson:
+    time-zone: Asia/Kolkata
+
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  expiration: 86400000        # 24 hours in ms
+  refresh-expiration: 604800000 # 7 days in ms
+
+logging:
+  level:
+    com.axiomflow: DEBUG
+    org.springframework.security: DEBUG
+  
+  # ── Kafka ──────────────────────────────────────────────────────
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
+    consumer:
+      group-id: axiomflow-worker
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.axiomflow.backend.*"
+
+  # ── Spring AI — Ollama ─────────────────────────────────────────
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: llama3.2
+        options:
+          temperature: 0.3
+          num-ctx: 4096
+      embedding:
+        model: nomic-embed-text
+  # ── pgvector store ─────────────────────────────────────────
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 768
+        initialize-schema: true
+
+# ── File upload ───────────────────────────────────────────────────
+file:
+  upload-dir: ./uploads
+
+# ── JWT ───────────────────────────────────────────────────────────
+jwt:
+  secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  expiration: 86400000
+  refresh-expiration: 604800000
+
+# ── Kafka topics ──────────────────────────────────────────────────
+kafka:
+  topics:
+    pdf-ingestion: pdf-tasks
+
+logging:
+  level:
+    com.axiomflow: DEBUG
+    org.springframework.ai: INFO
+    org.springframework.kafka: WARN
